@@ -1,0 +1,55 @@
+{% extends 'student_template/base_template.html' %} 
+{% load static %}
+
+{% block page_title %}
+    View Timetable
+{% endblock page_title %}
+
+{% block main_content %}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">View Timetable</h3>
+                    </div>
+
+                    <div class="card-body">
+                        {% if timetables %}
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Day</th>
+                                    <th>Course</th>
+                                    <th>Subject</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Room Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for timetable in timetables %}
+                                <tr>
+                                    <td>{{ timetable.get_day_of_week_display }}</td>
+                                    <td>{{ timetable.course }}</td>
+                                    <td>{{ timetable.subject }}</td>
+                                    <td>{{ timetable.start_time }}</td>
+                                    <td>{{ timetable.end_time }}</td>
+                                    <td>{{ timetable.room_number }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <p>No timetable entries found.</p>
+                        {% endif %}
+                    </div> 
+                </div> 
+            </div>
+        </div>
+    </div> 
+</section>
+
+{% endblock main_content %}

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Student Details</h1>
+    <p>Name: {{ student.admin.first_name }} {{ student.admin.last_name }}</p>
+    <p>Total Fees: {{ student_fees.total_fees }}</p>
+    <p>Paid Fees: {{ student_fees.paid_fees }}</p>
+    <p>Due Fees: {{ due_fees }}</p>
+{% endblock %}

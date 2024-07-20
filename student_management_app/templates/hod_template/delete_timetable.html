@@ -1,0 +1,34 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Confirm Delete Timetable Entry
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Confirm Delete</h3>
+          </div>
+          <div class="card-body">
+            <p>Are you sure you want to delete this timetable entry?</p>
+            <p>Course: {{ timetable.course.course_name }}</p>
+            <p>Subject: {{ timetable.subject.subject_name }}</p>
+            <p>Day: {{ timetable.day_of_week }}</p>
+            <p>Time: {{ timetable.start_time }} - {{ timetable.end_time }}</p>
+            <p>Room: {{ timetable.room_number }}</p>
+            <form method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">Confirm Delete</button>
+              <a href="{% url 'manage_timetable' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main_content %}

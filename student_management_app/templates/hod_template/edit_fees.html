@@ -1,0 +1,38 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Edit Fees Structure
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Edit Fees Structure</h3>
+          </div>
+          <div class="card-body">
+            <form method="post">
+              {% csrf_token %}
+              {% for field in form %}
+                <div class="form-group">
+                  {{ field.label_tag }}
+                  {{ field }}
+                  {% if field.errors %}
+                    <div class="alert alert-danger">
+                      {{ field.errors }}
+                    </div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+              <button type="submit" class="btn btn-primary">Update Fees Structure</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main_content %}

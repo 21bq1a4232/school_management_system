@@ -1,0 +1,528 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Pay Fees
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Search Student</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="GET" action="{% url 'hod_search_students' %}">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if students %}
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Student Details</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Course</th>
+                                    <th>Total Fees</th>
+                                    <th>Paid Fees</th>
+                                    <th>Due Fees</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                <tr>
+                                    <td>{{ student.admin.username }}</td>
+                                    <td>{{ student.admin.first_name }} {{ student.admin.last_name }}</td>
+                                    <td>{{ student.course_id.course_name }}</td>
+                                    <td>{{ student.total_fees }}</td>
+                                    <td>{{ student.paid_fees }}</td>
+                                    <td>{{ student.due_fees }}</td>
+                                    <td>
+                                        {% if student.due_fees > 0 %}
+                                            <a href="{% url 'process_payment' student.id %}" class="btn btn-primary btn-sm">Process Payment</a>
+                                        {% else %}
+                                            <button class="btn btn-success btn-sm" disabled>No Due</button>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>No students found.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock main_content %}
+
+{% comment %} {% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Pay Fees
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Search Student</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="GET" action="{% url 'hod_search_students' %}">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if students %}
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Student Details</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Course</th>
+                                    <th>Total Fees</th>
+                                    <th>Paid Fees</th>
+                                    <th>Due Fees</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                <tr>
+                                    <td>{{ student.admin.username }}</td>
+                                    <td>{{ student.admin.first_name }} {{ student.admin.last_name }}</td>
+                                    <td>{{ student.course_id.course_name }}</td>
+                                    <td>{{ student.total_fees }}</td>
+                                    <td>{{ total_paid_fees }}</td>
+                                    <td>{{ due_fees }}</td> <!-- Use due_fees_calculated -->
+                                    <td>
+                                        {% if due_fees > 0 %}
+                                            <a href="{% url 'process_payment' student.id %}" class="btn btn-primary btn-sm">Process Payment</a>
+                                        {% else %}
+                                            <button class="btn btn-success btn-sm" disabled>No Due</button>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>No students found.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock main_content %} {% endcomment %}
+
+{% comment %} {% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Pay Fees
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Search Student</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="GET" action="{% url 'hod_search_students' %}">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if students %}
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Student Details</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Course</th>
+                                    <th>Total Fees</th>
+                                    <th>Paid Fees</th>
+                                    <th>Due Fees</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                <tr>
+                                    <td>{{ student.admin.username }}</td>
+                                    <td>{{ student.admin.first_name }} {{ student.admin.last_name }}</td>
+                                    <td>{{ student.course_id.course_name }}</td>
+                                    <td>{{ student.total_fees }}</td>
+                                    <td>{{ student.paid_fees }}</td>
+                                    <td>{{ student.due_fees }}</td>
+                                    <td>
+                                        {% if student.due_fees > 0 %}
+                                            <a href="{% url 'process_payment' student.id %}" class="btn btn-primary btn-sm">Process Payment</a>
+                                        {% else %}
+                                            <button class="btn btn-success btn-sm" disabled>No Due</button>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>No students found.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock main_content %} {% endcomment %}
+
+{% comment %} <!-- hod_template/student_pay_fees.html -->
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Pay Fees
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Search Student</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="GET" action="{% url 'hod_search_students' %}">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if students %}
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Student Details</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Course</th>
+                                    <th>Total Fees</th>
+                                    <th>Paid Fees</th>
+                                    <th>Due Fees</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                <tr>
+                                    <td>{{ student.admin.username }}</td>
+                                    <td>{{ student.admin.first_name }} {{ student.admin.last_name }}</td>
+                                    <td>{{ student.course_id.course_name }}</td>
+                                    <td>{{ student.total_fees }}</td>
+                                    <td>{{ student.paid_fees }}</td>
+                                    <td>{{ student.due_fees }}</td>
+                                    <td>
+                                        {% if student.due_fees > 0 %}
+                                            <a href="{% url 'process_payment' student.id %}" class="btn btn-primary btn-sm">Process Payment</a>
+                                        {% else %}
+                                            <button class="btn btn-success btn-sm" disabled>No Due</button>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>No students found.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock main_content %} {% endcomment %}
+
+{% comment %} <!-- student_pay_fees.html -->
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Pay Fees
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <!-- Your existing HTML code for student search form -->
+
+        {% if students %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Student Details</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Course</th>
+                                    <th>Total Fees</th>
+                                    <th>Paid Fees</th>
+                                    <th>Due Fees</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                <tr>
+                                    <td>{{ student.admin.username }}</td>
+                                    <td>{{ student.admin.first_name }} {{ student.admin.last_name }}</td>
+                                    <td>{{ student.course_id.course_name }}</td>
+                                    <td>{{ student.fees }}</td>  <!-- Display total fees -->
+                                    <td>{{ student.paid_fees }}</td>
+                                    <td>{{ student.due_fees }}</td>
+
+                                    <td>
+                                        {% if student.due_fees > 0 %}
+                                            <a href="{% url 'process_payment' student.id %}" class="btn btn-primary btn-sm">Process Payment</a>
+                                        {% else %}
+                                            <button class="btn btn-success btn-sm" disabled>No Due</button>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>No students found.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock main_content %}
+
+{% comment %} {% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Pay Fees
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Search Student</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="GET" action="{% url 'hod_search_students' %}">
+                            <div class="form-group">
+                                <label for="q">Student Username/Name:</label>
+                                <input type="text" class="form-control" id="q" name="q" placeholder="Enter Username or Name">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if students %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Student Details</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Course</th>
+                                    <th>Total Fees</th>
+                                    <th>Paid Fees</th>
+                                    <th>Due Fees</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                <tr>
+                                    <td>{{ student.admin.username }}</td>
+                                    <td>{{ student.admin.first_name }} {{ student.admin.last_name }}</td>
+                                    <td>{{ student.course_id.course_name }}</td>
+                                    <td>{{ student.fees }}</td>
+                                    <td>{{ student.paid_fees }}</td>
+                                    <td>{{ student.due_fees }}</td>
+
+                                    <td>
+                                        {% if student.due_fees > 0 %}
+                                            <a href="{% url 'process_payment' student.id %}" class="btn btn-primary btn-sm">Process Payment</a>
+                                        {% else %}
+                                            <button class="btn btn-success btn-sm" disabled>No Due</button>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>No students found.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock main_content %}
+
+{% comment %} {% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Pay Fees
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Search Student</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="GET" action="{% url 'hod_search_students' %}">
+                            <div class="form-group">
+                                <label for="q">Student Username/Name:</label>
+                                <input type="text" class="form-control" id="q" name="q" placeholder="Enter Username or Name">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if students %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Student Details</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Course</th>
+                                    <th>Total Fees</th>
+                                    <th>Paid Fees</th>
+                                    <th>Due Fees</th>
+                                    <th>Action</th> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                <tr>
+                                    <td>{{ student.admin.username }}</td>
+                                    <td>{{ student.admin.first_name }} {{ student.admin.last_name }}</td>
+                                    <td>{{ student.course_id.course_name }}</td>
+                                    <td>{{ student.fees }}</td> 
+                                    <td>{{ student.paid_fees }}</td>
+                                    <td>{{ student.due_fees }}</td>
+
+                                    <td>
+                                        <a href="{% url 'process_payment' student.id %}" class="btn btn-primary btn-sm">Process Payment</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>No students found.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock main_content %} {% endcomment %} 
